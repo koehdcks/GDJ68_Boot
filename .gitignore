@@ -32,9 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-
-# Created by https://www.toptal.com/developers/gitignore/api/windows,java,maven
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,java,maven
+# Created by https://www.toptal.com/developers/gitignore/api/macos,java,maven,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,java,maven,windows
 
 ### Java ###
 # Compiled class file
@@ -61,6 +60,39 @@ build/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
 
 ### Maven ###
 target/
@@ -107,4 +139,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,java,maven
+# End of https://www.toptal.com/developers/gitignore/api/macos,java,maven,windows
