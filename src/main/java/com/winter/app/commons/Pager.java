@@ -18,7 +18,7 @@ public class Pager {
 	private String search;
 	//페이지 번호
 	private Long page;
-	//한 페이지당 보여줄 페이지번호갯수
+	//한 페이지당 보여줄 갯수
 	private Long perPage;
 	//총 페이지 갯수
 	private Long totalPage;
@@ -31,58 +31,54 @@ public class Pager {
 	// 다음 btn [true=중간블럭 | false=마지막블럭]
 	private boolean next;
 		
+	// 1. 보여질 data 갯수
 	public void makeRowNum() {
-		this.startRow = (this.getPage()-1)*this.getPerPage()+1;
-		this.lastRow = this.getPage()*this.getPerPage();
+		this.startRow = (this.getPage()-1)*this.getPerPage();		// *=10의자리 | +1=1의자리	
 		
 	}
 	
+	// 2. data 갯수에 따른 totalPage
 	public void makePageNum(Long total) {
-		//1. 전체 갯수로 전체 페이지 수 구하기
+		// 2_1. 전체 페이지 수 
 		this.totalPage = total/this.getPerPage();
-		if(total%this.getPerPage()!=0) {
+		if(total%this.getPerPage() != 0) {
 			this.totalPage++;
 		}
 		
-		//2. 전체 페이지수로 전체 block 수 구하기
-		
-		long perBlock=5;//한페이지에 출력할 번호의 갯수
-		
+		// 2_2. 전체 페이지 수로 block 나누기
+		long perBlock = 5;
+
 		long totalBlock = this.totalPage/perBlock;
-		if(this.totalPage%perBlock!=0) {
+		if(this.totalPage%perBlock != 0) {
 			totalBlock++;
 		}
 		
-		//3.현재 page번호로 블럭번호 구하기
-		//현재 블록 번호
+		// 2_3. 현재 page 번호로 block 구하기
 		long curBlock = this.getPage()/perBlock;
-		if(this.getPage()%perBlock!=0) {
+
+		if(this.getPage()%perBlock != 0) {
 			curBlock++;
 		}
 		
-		//4. 현재 블럭번호의 시작번호와 끝번호 구하기
-		//curBlock  startNum  lastNum
-		//		1			1			5
-		//		2			6			10		
-		//		3			11			15
-		this.startNum=(curBlock-1)*perBlock+1;
-		this.lastNum=curBlock*perBlock;
+
+		// 2_4. 현재 block의 시작+마지막 번호 구하기
+		this.startNum = (curBlock-1)*perBlock+1;
+		this.lastNum = curBlock*perBlock;
 		
-		//이전 블럭 활성화 여부
+		// 2_5. 이전*다음 block 활성화
 		if(curBlock>1) {
-			this.pre = true;
+			this.pre=true;
 		}
-		
-		//다음 블럭 활성화 여부
+
 		if(curBlock<totalBlock) {
-			this.next = true;
+			this.next=true;
 		}
 		
-		// 현재 블럭이 마지막 블럭번호와 같다면 lastNum을 totalBlock숫자를 대입
+
+		// 2_5_1. 마지막 block일 때
 		if(!this.next) {
-			this.lastNum=totalPage; 
+			this.lastNum=totalPage;
 		}
-		
 	}
 	
 	public Long getStartRow() {
