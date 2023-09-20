@@ -25,6 +25,11 @@
 	         	<h1>글제목:${boardVO.boardTitle}</h1>
 	         	<h1>작성자:${boardVO.boardWriter}</h1>
 	         	<h1>내용:${boardVO.boardContents}</h1>
+	       		<div class="row">
+	       			<c:forEach items="${boardVO.list}" var="f">
+	       				<img alt="" src="../files/${board}/${f.fileName}">
+	       			</c:forEach>
+	       		</div>
 	         </div>
 	         <a href="./update?boardNo=${boardVO.boardNo}">수정</a>
 	         <a href="./delete?boardNo=${boardVO.boardNo }">삭제</a>

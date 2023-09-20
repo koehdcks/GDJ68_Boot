@@ -20,7 +20,7 @@
 
 				<div class="container-fluid">
 					<div class="row">
-						<form action="add" method="post">
+						<form action="add" method="post" enctype="multipart/form-data">
 							<div class="mb-3">
 								<label for="boardTitle" class="form-label">Title
 									</label> <input type="text" class="form-control"
@@ -36,6 +36,13 @@
 								<textarea class="form-control" id="boardContents" name="boardContents"
 									rows="3"></textarea>
 							</div>
+							<div class="mb-3">
+								<input type="file" class="form-control" name="files">
+							</div>
+							<div class="mb-3">
+								<input type="file" class="form-control" name="files">
+							</div>
+							
 							<button type="submit">글작성</button>
 						</form>
 					</div>
