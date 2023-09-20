@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardVO;
+import com.winter.app.board.FileVO;
 import com.winter.app.commons.Pager;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,13 @@ public class NoticeController {
 	@ModelAttribute("board")
 	public String getBoard() {
 		return "notice";
+	}
+	
+	@GetMapping("fileDown")
+	public String getFileDown(Model model,FileVO fileVO) throws Exception{
+		fileVO = noticeService.getFileDetail(fileVO);
+		model.addAttribute("fileVO", fileVO);
+		return "fileDownView";
 	}
 	
 	
@@ -77,5 +85,6 @@ public class NoticeController {
 		int result=noticeService.setDelete(noticeVO);
 		return "redirect:list";
 	}
+	
 	
 }
