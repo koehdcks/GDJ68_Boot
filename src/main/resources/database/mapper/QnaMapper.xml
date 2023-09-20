@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winter.app.board.qna.QnaDAO">
+	<sql id="forPager">
+		<!-- if문 사용 <if test="kind=='1'"> BOARDTITLE LIKE '%%' </if> <if test="kind=='2'"> 
+			BOARDWRITER LIKE '%%' </if> <if test="kind=='3'"> BOARDCONTENTS LIKE '%%' 
+			</if> -->
+
+		<choose>
+			<when test="kind=='1'">
+				BOARDTITLE
+			</when>
+			<when test="kind=='2'">
+				BOARDCONTENTS
+			</when>
+			<otherwise>
+				BOARDWRITER
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="getCount" parameterType="Pager" resultType="Long">
+		<!-- <bind> : mybatis에서 제공하는 동적쿼리문 / value => parameter값을 가져올때는 _(언더바)를 
+			쓰고 파라미터.getter의 이름 -->
+		<bind name="pattern" value="'%'+_parameter.getSearch()+'%'" />
+		SELECT COUNT(BOARDNO) FROM NOTICE
+		WHERE
+		<include refid="forPager"></include>
+		LIKE #{pattern}
+	</select>
+	
+	<select id="getList" resultType="QnaVO" parameterType="Pager">
+		SELECT * FROM QNA
+		WHERE
+		<include refid="forPager"></include>
+		LIKE CONCAT('%',#{search},'%')
+		ORDER BY BOARDNO DESC
+		LIMIT
+		#{startRow},#{lastRow}
+	</select>
+
+	<insert id="add" parameterType="QnaVO">
+		INSERT INTO QNA
+		VALUES(NULL,#{boardTitle},#{boardWriter},#{boardContents},NOW(),0,0,0,0)
+	</insert>
+</mapper>

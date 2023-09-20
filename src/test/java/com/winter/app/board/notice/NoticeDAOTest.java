@@ -13,6 +13,7 @@ import com.winter.app.commons.Pager;
 
 @SpringBootTest
 class NoticeDAOTest {
+	
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
