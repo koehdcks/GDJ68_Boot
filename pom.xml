@@ -12,6 +12,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>GDJ68_Boot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>GDJ68_Boot</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
