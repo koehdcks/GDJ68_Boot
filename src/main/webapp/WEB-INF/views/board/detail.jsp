@@ -27,7 +27,7 @@
 	         	<h1>내용:${boardVO.boardContents}</h1>
 	       		<div class="row">
 	       			<c:forEach items="${boardVO.list}" var="f">
-	       				<img alt="" src="../files/${board}/${f.fileName}">
+	       				<img alt="" src="/files/${board}/${f.fileName}">
 	       				<a href="./fileDown?fileNo=${f.fileNo}">${f.oriName}</a>
 	       			</c:forEach>
 	       		</div>
