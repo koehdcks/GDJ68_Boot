@@ -1,27 +1,44 @@
 package com.winter.app.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
-public class MemberService {
+@Slf4j
+public class MemberService implements UserDetailsService {
 	
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
-	public MemberVO getLogin(MemberVO memberVO) throws Exception{
-		MemberVO loginVO = memberDAO.getMember(memberVO);
-		
-		if(loginVO==null) {
-			return loginVO;
+	
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		log.info("======= 로그인 시도 중 =======");
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUsername(username);
+		try {
+			memberVO = memberDAO.getMember(memberVO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			memberVO=null;
 		}
 		
-		if(loginVO.getPassword().equals(memberVO.getPassword())) {
-			return loginVO;
-		}
-		
-		return null;
+		return memberVO;
 	}
 	
 	
@@ -46,6 +63,18 @@ public class MemberService {
 		
 		
 		return check;
+	}
+	
+	@Transactional(rollbackFor = Exception.class) //둘 중 하나라도 에러뜨면 롤백하겠다
+	public int setJoin(MemberVO memberVO) throws Exception{
+		memberVO.setPassword(passwordEncoder.encode(memberVO.getPassword()));
+		int result=memberDAO.setJoin(memberVO);
+		Map<String, Object> map = new HashMap<>();
+		map.put("roleNum", 3);
+		map.put("username", memberVO.getUsername());
+		result = memberDAO.setMemberRole(map);
+		
+		return result;
 	}
 	
 }

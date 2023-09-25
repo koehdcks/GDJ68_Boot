@@ -30,7 +30,7 @@ public class MemberController {
 	@GetMapping("update")
 	public void setUpdate(HttpSession session,Model model) throws Exception{
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		memberVO = memberService.getLogin(memberVO);
+//		memberVO = memberService.getLogin(memberVO);
 		
 		MemberInfoVO memberInfoVO = new MemberInfoVO();
 		memberInfoVO.setName(memberVO.getName());
@@ -64,18 +64,7 @@ public class MemberController {
 	public void getLogin(@ModelAttribute MemberVO memberVO) throws Exception{
 		
 	}
-	
-	@PostMapping("login")
-	public String getLogin2(MemberVO memberVO,HttpSession session) throws Exception{
-		memberVO=memberService.getLogin(memberVO);
-		
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			return "redirect:../";
-		}
-		return "redirect:./login";
-		
-	}
+
 	
 	
 	
@@ -93,7 +82,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("join")
-	public String setJoin(MemberVO memberVO,BindingResult bindingResult,MultipartFile photo) throws Exception{
+	public String setJoin(@Valid MemberVO memberVO,BindingResult bindingResult,MultipartFile photo) throws Exception{
 		
 		//@Valid는 Controller에서만 작동 가능
 		
@@ -104,6 +93,8 @@ public class MemberController {
 		if(bindingResult.hasErrors() || check) {
 			return "member/join";
 		}
+		int result = memberService.setJoin(memberVO);
+		
 		log.info("Photo : {} --- size : {}",photo.getOriginalFilename(),photo.getSize());
 		return "redirect:../";
 	}
