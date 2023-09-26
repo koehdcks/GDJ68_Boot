@@ -1,6 +1,7 @@
 package com.winter.app.config;
 
 import org.aspectj.weaver.ast.And;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	@Autowired
+	private SecuritySuccessHandler handler;
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -49,7 +52,9 @@ public class SecurityConfig {
 			.formLogin()
 				.loginPage("/member/login") //내장된 로그인폼을 사용하지 않고, 개발자가 만든 폼을 사용
 				.defaultSuccessUrl("/") //성공했을때 어디로 갈건지
-				.failureUrl("/member/login")// 실패했을때
+//				.successHandler(handler) 디폴트석세스대신 자기가 성공했을때 뭘할지 할때 쓰는거
+//				.failureUrl("/member/login?message=LoginFail")// 실패했을때
+				.failureHandler(getFailHandler())
 				.permitAll()
 				.and()
 			.logout()
@@ -63,6 +68,10 @@ public class SecurityConfig {
 		
 			return httpSecurity.build();
 	
+	}
+	
+	private SecurityFailHandler getFailHandler() {
+		return new SecurityFailHandler();
 	}
 	
 }

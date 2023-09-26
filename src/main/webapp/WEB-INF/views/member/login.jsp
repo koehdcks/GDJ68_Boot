@@ -21,6 +21,9 @@
 
 				<div class="container-fluid">
 					<!-- page 상세내용 -->
+					<div>
+						<h3>${param.message}</h3>
+					</div>
 					<form:form modelAttribute="memberVO" method="post">
 						<div class="form-group">
 							<form:label path="username">Username</form:label>
@@ -46,5 +49,12 @@
 	</div>
 
 	<c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
+	<script type="text/javascript">
+	let m = '${param.message}';
+	
+	if(m!=''){
+		alert('${param.message}');
+	}
+	</script>
 </body>
 </html>
