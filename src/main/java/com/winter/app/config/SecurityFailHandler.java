@@ -29,11 +29,12 @@ public class SecurityFailHandler implements AuthenticationFailureHandler {@Overr
 		String message="로그인 실패";
 		
 		if(exception instanceof InternalAuthenticationServiceException) {
-			message="아이디 틀림";
+			//message="아이디 틀림";
+			message="login.fail.nouser";
 		}
 		
 		if(exception instanceof BadCredentialsException) {
-			message="비번 틀림";
+			message="login.fail.notpassword";
 		}
 		if(exception instanceof AccountExpiredException) {
 			/* isAccountNonExpired = false*/
