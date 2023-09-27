@@ -38,7 +38,10 @@
 							<form:password id="password" path="password" cssClass="form-control"/>
 							<form:errors path="password"></form:errors>
 						</div>
-						
+						<div class="form-group">
+							<label for="remember">RememberMe</label>
+							<input type="checkbox" name="remember-me" id="remember" class="form-control">
+						</div>
 						
 						
 						<button type="submit" class="btn btn-primary">Submit</button>
@@ -53,11 +56,13 @@
 
 	<c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
 	<script type="text/javascript">
-	let m = '${msg}';
+		let m = '${msg}';
 	
-	if(m!=''){
-		alert('${msg}');
-	}
+		if(m!=''){
+			alert(m);
+		}
+		
+		history.replaceState({}, null, location.pathname); //겟방식 url 파라미터 감추기
 	</script>
 </body>
 </html>

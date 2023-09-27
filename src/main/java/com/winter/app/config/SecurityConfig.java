@@ -11,16 +11,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.winter.app.member.MemberService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 	@Autowired
 	private SecuritySuccessHandler handler;
+	@Autowired
+	private MemberService memberService;
 	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 	
 	
 	//public 을 선언하면 default로 바꾸라는 메세지 출력
@@ -64,6 +64,12 @@ public class SecurityConfig {
 				.logoutSuccessHandler(getLogoutHandler())
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
+				.and()
+			.rememberMe()
+				.tokenValiditySeconds(60)
+				.key("rememberKey")
+				.userDetailsService(memberService)
+				.authenticationSuccessHandler(handler)
 				.and()
 			.sessionManagement()
 			;

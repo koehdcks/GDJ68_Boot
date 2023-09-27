@@ -1,11 +1,13 @@
 package com.winter.app.member;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -36,10 +38,10 @@ public class MemberController {
 	
 	
 	@GetMapping("update")
-	public void setUpdate(HttpSession session,Model model) throws Exception{
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+	public void setUpdate(@AuthenticationPrincipal MemberVO memberVO,Model model) throws Exception{
+//		MemberVO memberVO = (MemberVO)principal;
 //		memberVO = memberService.getLogin(memberVO);
-		
+			
 		MemberInfoVO memberInfoVO = new MemberInfoVO();
 		memberInfoVO.setName(memberVO.getName());
 		memberInfoVO.setBirth(memberVO.getBirth());
@@ -49,14 +51,21 @@ public class MemberController {
 	}
 	
 	@PostMapping("update")
-	public void setUpdate(@Valid MemberInfoVO memberInfoVO,BindingResult bindingResult) throws Exception{
-
-		bindingResult.getAllErrors();
+	public String setUpdate(@Valid MemberInfoVO memberInfoVO,BindingResult bindingResult) throws Exception{
 		
-		List<FieldError> errors = bindingResult.getFieldErrors();
-		for(FieldError e:errors) {
-			log.info(e.getField());
-		}
+		Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		MemberVO memberVO = (MemberVO)obj;
+		
+		memberVO.setEmail("UpdateEmail@naver.com");
+		
+		return "redirect:/";
+		
+//		bindingResult.getAllErrors();
+//		
+//		List<FieldError> errors = bindingResult.getFieldErrors();
+//		for(FieldError e:errors) {
+//			log.info(e.getField());
+//		}
 	}
 	
 	
