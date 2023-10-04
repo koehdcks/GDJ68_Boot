@@ -33,7 +33,7 @@ public class SecurityLogoutAdd implements LogoutHandler {
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		log.info("================ Logout Add ================");
 		
-//		this.logoutKakao(response);
+		this.logoutKakao(response);
 	
 		
 	}
