@@ -36,6 +36,13 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("kakaoLogout")
+	public String kakaoLogout() throws Exception{
+		
+		log.info("+++++++++++++++++++++카카오로그아웃컨트롤러");
+		
+		return "redirect:/";
+	}
 	
 	@GetMapping("update")
 	public void setUpdate(@AuthenticationPrincipal MemberVO memberVO,Model model) throws Exception{
@@ -69,12 +76,6 @@ public class MemberController {
 	}
 	
 	
-	@GetMapping("logout")
-	public String getLogout(HttpSession session) throws Exception{
-		session.invalidate();
-		
-		return "redirect:../";
-	}
 	
 	
 	@GetMapping("login")

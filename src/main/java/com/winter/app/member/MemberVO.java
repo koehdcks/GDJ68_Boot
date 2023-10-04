@@ -40,6 +40,8 @@ public class MemberVO extends MemberInfoVO implements UserDetails,OAuth2User{
 	//OAuth2User , token 정보 저장
 	private Map<String,Object> attributes;
 	
+	private String accessToken;
+	
 	
 	//OAuth2User
 	@Override
