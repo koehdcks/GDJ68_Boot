@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -21,7 +23,23 @@
                             </div>
                         </div>
                     </form>
-
+                    <!-- 로그인 전 -->
+                    <sec:authorize access="!isAuthenticated()">
+                    <ul class="navbar-nav ml-auto">
+                    	<li class="nav-item">
+                    		<a class="nav-link" href="/member/join" id="join" role="button" aria-expanded="false">
+                                <i class='far fa-address-card' style='font-size:24px'></i>
+                            </a>
+                    	</li>
+                    	<li class="nav-item">
+                    		<a class="nav-link" href="/member/login" id="join" role="button" aria-expanded="false">
+                                <i class="fas fa-user-ninja"></i>
+                            </a>
+                    	</li>
+                    </ul>
+					</sec:authorize>
+					<!-- 로그인 후 -->
+					<sec:authorize access="isAuthenticated()">
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -179,13 +197,13 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/member/info">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/member/update">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    정보수정
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -200,6 +218,7 @@
                         </li>
 
                     </ul>
-
+					</sec:authorize>
+					
                 </nav>
                 <!-- End of Topbar -->
