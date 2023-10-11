@@ -32,6 +32,7 @@ public class QnaController {
 		model.addAttribute("list", ar);
 		model.addAttribute("pager",pager);
 		
+		
 		return "board/list";
 	}
 }
